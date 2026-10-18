@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}Analizador de representación de datos{% endblock %}</title>
+  <style>
+    :root {
+      --fondo: #f4f1ea; --papel: #fffdf8; --tinta: #1d1b16; --suave: #6b665a;
+      --linea: #ddd6c6; --acento: #1f5e4a; --acento-suave: #e3eee9;
+      --error: #a1271b; --error-suave: #fbe9e6;
+      --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --fondo: #15140f; --papel: #1e1c17; --tinta: #ece7da; --suave: #a39d8d;
+        --linea: #34312a; --acento: #7cc4a8; --acento-suave: #1d2d27;
+        --error: #f08b7d; --error-suave: #2f1b18;
+      }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--fondo); color: var(--tinta);
+           font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+    main { max-width: 860px; margin: 0 auto; padding: 32px 16px 64px; }
+    header h1 { font-size: 1.7rem; margin: 0 0 4px; letter-spacing: -.01em; }
+    header p { margin: 0 0 28px; color: var(--suave); }
+    section { background: var(--papel); border: 1px solid var(--linea); border-radius: 10px;
+              padding: 22px; margin-bottom: 22px; }
+    h2 { font-size: 1.1rem; margin: 0 0 14px; }
+    form { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; }
+    label { display: grid; gap: 4px; font-size: .85rem; color: var(--suave); }
+    input, select { font: inherit; padding: 8px 10px; border: 1px solid var(--linea);
+                    border-radius: 6px; background: var(--fondo); color: var(--tinta); min-width: 180px; }
+    input:focus, select:focus { outline: 2px solid var(--acento); outline-offset: 1px; }
+    button { font: inherit; font-weight: 600; padding: 9px 18px; border: 0; border-radius: 6px;
+             background: var(--acento); color: var(--papel); cursor: pointer; }
+    .error { margin-top: 14px; padding: 10px 12px; border-radius: 6px; border-left: 4px solid var(--error);
+             background: var(--error-suave); color: var(--error); }
+    dl { display: grid; grid-template-columns: max-content 1fr; gap: 6px 18px; margin: 18px 0 0; }
+    dt { color: var(--suave); }
+    dd { margin: 0; font-family: var(--mono); overflow-wrap: anywhere; }
+    .nota { font-size: .85rem; color: var(--suave); margin-top: 10px; }
+    .tabla { overflow-x: auto; margin-top: 18px; }
+    table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+    th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--linea); }
+    th { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: var(--suave); }
+    td { font-family: var(--mono); }
+    td.car { font-size: 1.2rem; }
+    .chip { display: inline-block; padding: 0 6px; border-radius: 4px; background: var(--acento-suave); }
+  </style>
+</head>
+<body>
+  <main>{% block contenido %}{% endblock %}</main>
+</body>
+</html>

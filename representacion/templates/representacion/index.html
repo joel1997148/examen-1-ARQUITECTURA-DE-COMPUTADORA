@@ -1,0 +1,66 @@
+{% extends "representacion/base.html" %}
+
+{% block contenido %}
+<header>
+  <h1>Analizador de representación de datos</h1>
+  <p>Sistemas numéricos, ajuste a bytes y codificación UTF-8.</p>
+</header>
+
+<section aria-labelledby="t-numero">
+  <h2 id="t-numero">1 · Conversión entre bases</h2>
+  <form method="post" action="{% url 'representacion:numero' %}" novalidate>
+    {% csrf_token %}
+    <label>{{ numero_form.numero.label }} {{ numero_form.numero }}</label>
+    <label>{{ numero_form.base.label }} {{ numero_form.base }}</label>
+    <button type="submit">Convertir</button>
+  </form>
+
+  {% for e in numero_form.numero.errors %}<p class="error" role="alert">{{ e }}</p>{% endfor %}
+  {% for e in numero_form.base.errors %}<p class="error" role="alert">{{ e }}</p>{% endfor %}
+
+  {% if resultado %}
+  <dl>
+    <dt>Decimal</dt><dd>{{ resultado.decimal }}</dd>
+    <dt>Binario ({{ resultado.bits_ajustados }} bits)</dt><dd>{{ resultado.binario_agrupado }}</dd>
+    <dt>Octal</dt><dd>{{ resultado.octal }}</dd>
+    <dt>Hexadecimal</dt><dd>{{ resultado.hexadecimal }}</dd>
+    <dt>Bits significativos</dt><dd>{{ resultado.bits_significativos }}</dd>
+    <dt>Bytes necesarios</dt><dd><span class="chip">{{ resultado.bytes_necesarios }}</span></dd>
+  </dl>
+  <p class="nota">El binario se completa con ceros a la izquierda hasta el siguiente múltiplo de 8 bits.</p>
+  {% endif %}
+</section>
+
+<section aria-labelledby="t-texto">
+  <h2 id="t-texto">2 · Análisis de caracteres</h2>
+  <form method="post" action="{% url 'representacion:texto' %}" novalidate>
+    {% csrf_token %}
+    <label>{{ texto_form.texto.label }} (máx. 20) {{ texto_form.texto }}</label>
+    <button type="submit">Analizar</button>
+  </form>
+
+  {% for e in texto_form.texto.errors %}<p class="error" role="alert">{{ e }}</p>{% endfor %}
+
+  {% if caracteres %}
+  <div class="tabla">
+    <table>
+      <thead>
+        <tr><th>Carácter</th><th>Decimal</th><th>Punto de código</th><th>Hex</th><th>Bytes UTF-8</th><th>N.º bytes</th></tr>
+      </thead>
+      <tbody>
+        {% for c in caracteres %}
+        <tr>
+          <td class="car">{% if c.caracter == " " %}<span class="chip">espacio</span>{% else %}{{ c.caracter }}{% endif %}</td>
+          <td>{{ c.decimal }}</td>
+          <td>{{ c.punto_codigo }}</td>
+          <td>{{ c.hexadecimal }}</td>
+          <td>{{ c.bytes_utf8 }}</td>
+          <td>{{ c.cantidad_bytes }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}

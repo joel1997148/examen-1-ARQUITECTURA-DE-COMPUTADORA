@@ -1,0 +1,15 @@
+# Evidencia generada en el entorno de pruebas de Claude (2026-10-18)
+
+Imagen base: Python 3.12.13 local (el registro Docker Hub no era accesible desde el entorno).
+Contenedor ejecutado con: --memory=256m --cpus=1 --read-only --tmpfs /tmp
+
+## docker stats durante carga (400 peticiones, 8 hilos)
+NAME      CPU %     MEM USAGE / LIMIT   MEM %     PIDS
+ev-opt    14.33%    70.44MiB / 256MiB   27.52%    7
+
+## docker stats en reposo
+NAME      CPU %     MEM USAGE / LIMIT   MEM %     PIDS
+ev-opt    0.05%     73.61MiB / 256MiB   28.76%    7
+
+## docker inspect
+/ev-opt Memory=268435456 NanoCpus=1000000000 ReadOnly=true User=10001

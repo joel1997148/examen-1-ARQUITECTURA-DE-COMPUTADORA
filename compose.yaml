@@ -1,0 +1,26 @@
+name: analizador
+
+services:
+  web:
+    build: .
+    image: analizador-datos:1.0
+    container_name: analizador-datos
+    ports:
+      - "8000:8000"
+    environment:
+      DJANGO_DEBUG: "0"
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:-cambie-esta-clave-en-produccion}
+      DJANGO_ALLOWED_HOSTS: "localhost,127.0.0.1,0.0.0.0"
+      DJANGO_CSRF_TRUSTED_ORIGINS: "http://localhost:8000,http://127.0.0.1:8000"
+    # Límites de recursos exigidos: 256 MB de RAM y 1 CPU
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 256M
+    read_only: true          # sistema de archivos inmutable
+    tmpfs:
+      - /tmp                 # gunicorn necesita un directorio temporal escribible
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
